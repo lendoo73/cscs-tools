@@ -1,0 +1,25 @@
+[project]
+name = "cscs-tools"
+version = "0.0.1"
+description = "Utilities library"
+authors = [
+    { name = "Csaba Cselko", email = "lendoo73dev@gmail.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.7"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
+
+[project.urls]
+Homepage = "https://example.com"  # optional
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
