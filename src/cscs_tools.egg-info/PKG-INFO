@@ -5,10 +5,12 @@ Summary: Utilities library
 Author: Csaba Cselko
 Author-email: Csaba Cselko <lendoo73dev@gmail.com>
 License: MIT
-Project-URL: Homepage, https://example.com
+Project-URL: Homepage, https://github.com/lendoo73/cscs-tools
+Project-URL: Repository, https://github.com/lendoo73/cscs-tools
+Project-URL: Issues, https://github.com/lendoo73/cscs-tools/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
-Requires-Python: >=3.7
+Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Dynamic: author

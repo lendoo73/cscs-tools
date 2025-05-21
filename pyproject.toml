@@ -7,15 +7,19 @@ authors = [
 ]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License"
 ]
 
+dependencies = []
+
 [project.urls]
-Homepage = "https://example.com"  # optional
+Homepage = "https://github.com/lendoo73/cscs-tools"
+Repository = "https://github.com/lendoo73/cscs-tools"
+Issues = "https://github.com/lendoo73/cscs-tools/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
