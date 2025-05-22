@@ -2,7 +2,7 @@ from cscs_tools.version.repositories.version_file_repository import VersionFileR
 
 
 class VersionService:
-    def __init__(self, file="version.json"):
+    def __init__(self, file=None):
         self.file_repo = VersionFileRepository(file)
 
     def get_version(self):
