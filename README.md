@@ -1,6 +1,7 @@
 # cscs
 
-Utility library for managing and retrieving version information from a `version.json` file.
+A utility library for managing and retrieving version information from a version.json file, 
+with additional tools such as a logger and more.
 
 ## 📦 Installation
 
@@ -10,47 +11,15 @@ Install from PyPI:
 pip install cscs
 ```
 
-## 🚀 Usage
+## 🧪 Samples
 
-Place a `version.json` in your project root:
+For examples of how to use tools included in this library, check the `/sample` folder.  
+Each package has a corresponding `<package>_sample.py` file demonstrating its usage.
 
-```json
-{
-  "major": 0,
-  "minor": 2,
-  "patch": 1,
-  "inherit": true
-}
-```
+### Sample Code Links
 
-Then use it like this:
-
-```python
-from cscs.version.services.version_service import VersionService
-
-service = VersionService()  # Automatically finds version.json upwards
-version = service.get_version()
-print(version.str_repr())
-```
-
-Or specify the file path manually:
-
-```python
-service = VersionService(file="path/to/my_ver.custom")
-```
-
-## 🧱 JSON Structure
-
-The required structure of the `version.json` file is:
-
-```json
-{
-  "major": 0,
-  "minor": 2,
-  "patch": 1,
-  "inherit": true
-}
-```
+* [version_sample.py](https://github.com/lendoo73/cscs-tools/blob/main/sample/version/version_sample.py)
+* [logger_sample.py](https://github.com/lendoo73/cscs-tools/blob/main/sample/logger/logger_sample.py)
 
 ## 📝 License
 
