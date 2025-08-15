@@ -86,5 +86,5 @@ LOG_DIRECTORY=/var/log/myapp
 ACCESS_LOG_FILE=access.log
 LEVEL=DEBUG
 ROTATION=7
-FORMAT=%(asctime)s - %(name)s - %(levelname)s - %(message)s
+FORMAT="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 ```

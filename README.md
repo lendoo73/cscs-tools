@@ -8,7 +8,7 @@ with additional tools such as a logger and more.
 Install from PyPI:
 
 ```bash
-pip install cscs
+pip install cscs-tools
 ```
 
 ## 🧪 Samples
