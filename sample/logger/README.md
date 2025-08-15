@@ -30,8 +30,8 @@ from cscs_tools.logger.services.logger_service import LoggerService
 
 # Make sure to load your .env file first
 custom_logger_service = LoggerService(
-    log_directory=os.getenv("LOG_DIRECTORY", ""),   # Path from .env
-    log_file=os.getenv("ACCESS_LOG_FILE", "access"),  # File name from .env
+    log_directory=os.getenv("LOG_DIRECTORY", "/log"),   # Path from .env
+    log_file=os.getenv("ACCESS_LOG_FILE", "access.log"),  # File name from .env
     level=os.getenv("LEVEL", "INFO"),               # Logging level
     days=os.getenv("ROTATION", None),               # Rotation days
     log_format=os.getenv("FORMAT", None)            # Custom log format
