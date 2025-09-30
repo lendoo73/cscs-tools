@@ -1,6 +1,6 @@
 [project]
 name = "cscs-tools"
-version = "0.0.4"
+version = "0.0.5"
 description = "Utilities library"
 authors = [
     { name = "Csaba Cselko", email = "lendoo73dev@gmail.com" }

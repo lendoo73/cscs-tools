@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="cscs-tools",
-    version="0.0.3",
+    version="0.0.5",
     description="Utilities library",
     author="Csaba Cselko",
     author_email="lendoo73dev@gmail.com",

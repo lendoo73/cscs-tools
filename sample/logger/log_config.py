@@ -18,3 +18,5 @@ custom_logger_service = LoggerService(
     days=os.getenv("ROTATION", None),
     log_format=os.getenv("FORMAT", None)
 )
+
+stdout_logger_service = LoggerService(to_stdout=True, level="DEBUG")

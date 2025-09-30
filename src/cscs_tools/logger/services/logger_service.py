@@ -1,5 +1,4 @@
-import logging
-import os
+import logging, os, sys
 from logging.handlers import TimedRotatingFileHandler
 
 
@@ -67,7 +66,8 @@ class LoggerService:
             log_file="app.log",
             level="INFO",
             days=30,
-            log_format="%(asctime)s - %(levelname)s - %(message)s"
+            log_format="%(asctime)s - %(levelname)s - %(message)s",
+            to_stdout=False
     ):
         """
         Initialize the LoggerService with configurable logging parameters.
@@ -89,10 +89,13 @@ class LoggerService:
             Number of days to keep old log files before rotating out (default is 30).
         log_format : str, optional
             Format string for log messages (default is '%(asctime)s - %(levelname)s - %(message)s').
+        to_stdout : bool, optional
+            If True, logs are written to stdout instead of a file (default is False).
         """
         self.log_directory = os.path.abspath(log_directory)
         self.log_file = log_file
         self.days = days
+        self.to_stdout = to_stdout
         self.logger = self._configure_logging(level, log_format)
 
     def _configure_logging(self, level, log_format):
@@ -118,25 +121,31 @@ class LoggerService:
             Configured logger instance that writes to the specified log file
             and rotates logs daily.
         """
-        if not os.path.exists(self.log_directory):
-            os.makedirs(self.log_directory)
+        logger = logging.getLogger(self.log_file)
 
         log_formatter = logging.Formatter(log_format)
-
-        file_handler = TimedRotatingFileHandler(
-            filename=os.path.join(self.log_directory, self.log_file),
-            when="D",
-            interval=1,
-            backupCount=self.days,
-            encoding="utf-8",
-            delay=False
-        )
-        file_handler.setFormatter(log_formatter)
-
-        logger = logging.getLogger(self.log_file)
         numeric_level = getattr(logging, level.upper(), logging.INFO)
         logger.setLevel(numeric_level)
-        logger.addHandler(file_handler)
+
+        if self.to_stdout:
+            handler = logging.StreamHandler(sys.stdout)
+        else:
+            if not os.path.exists(self.log_directory):
+                os.makedirs(self.log_directory)
+
+
+            handler = TimedRotatingFileHandler(
+                filename=os.path.join(self.log_directory, self.log_file),
+                when="D",
+                interval=1,
+                backupCount=self.days,
+                encoding="utf-8",
+                delay=False
+            )
+
+        handler.setFormatter(log_formatter)
+
+        logger.addHandler(handler)
         logger.propagate = False  # Prevent log messages from being propagated to the root logger
 
         return logger
