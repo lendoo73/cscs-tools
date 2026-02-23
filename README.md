@@ -20,6 +20,7 @@ Each package has a corresponding `<package>_sample.py` file demonstrating its us
 
 * [version_sample.py](https://github.com/lendoo73/cscs-tools/blob/main/sample/version/version_sample.py)
 * [logger_sample.py](https://github.com/lendoo73/cscs-tools/blob/main/sample/logger/logger_sample.py)
+* [mail_sample.py](https://github.com/lendoo73/cscs-tools/blob/main/sample/mail/mail_sample.py)
 
 ## 📝 License
 
