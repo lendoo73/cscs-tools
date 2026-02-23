@@ -17,7 +17,6 @@ mail = MailService(
 
 mail.send(
     to="user1@example.com",
-    subject="Test mail",
     text_body="Hello World.",
 )
 ```
@@ -46,7 +45,7 @@ mail.send(
 ```python
 mail.send(
     to="user@example.com",
-    subject="Hello",
+    subject="Optional",
     text_body="Hi there!",
 )
 ```
