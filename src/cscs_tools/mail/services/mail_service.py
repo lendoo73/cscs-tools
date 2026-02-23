@@ -64,7 +64,7 @@ class MailService:
             except Exception:
                 raise
 
-    def send_html(self, to, subject: str, html_file_path: str, attachments: list[str]=None):
+    def send_html(self, to, html_file_path: str, subject=None, attachments: list[str]=None):
         with open(html_file_path, "r", encoding=self.charset) as f:
             html = f.read()
 

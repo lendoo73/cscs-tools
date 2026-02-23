@@ -9,11 +9,10 @@ mail = MailService(
 # Basic text email
 mail.send(
     to="myemail@gmail.com",
-    subject="Test mail",
     text_body="Hello World."
 )
 
-# Email with optional attachments
+# Email with optional subject and attachments
 mail.send(
     to="myemail@gmail.com",
     subject="Test mail",
@@ -24,7 +23,7 @@ mail.send(
 # HTML email using an HTML file as the body
 mail.send_html(
     to="myemail@gmail.com",
-    subject="Test mail",
+    subject="Test mail",  # optional
     html_file_path="sample/mail/test_email.html",
     attachments=["log/access.log", "log/error.log"] # optional
 )
