@@ -23,6 +23,10 @@ mail.send(
 
 ---
 
+## 🚀 Command‑Line Usage
+If you prefer sending emails directly from the terminal or CI/CD systems (GitHub Actions, GitLab CI, Jenkins),
+see [cscs_sendmail_cli.md](cscs_sendmail_cli.md).
+
 ## ⚙️ MailService
 
 ### Required

@@ -5,16 +5,18 @@ description = "Utilities library"
 authors = [
     { name = "Csaba Cselko", email = "lendoo73dev@gmail.com" }
 ]
-license = { text = "MIT" }
+license = "MIT"
 readme = "README.md"
 requires-python = ">=3.8"
 
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License"
+    "Programming Language :: Python :: 3"
 ]
 
 dependencies = []
+
+[project.scripts]
+cscs-sendmail = "cscs_tools.mail.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/lendoo73/cscs-tools"
