@@ -1,0 +1,6 @@
+Include *.conf
+
+Host myjumphost
+    HostName jumphost-ssh-jumphost-1
+    User observer
+    IdentityFile id_rsa
