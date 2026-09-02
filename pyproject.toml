@@ -1,6 +1,6 @@
 [project]
 name = "cscs-tools"
-version = "0.0.7"
+version = "0.0.10"
 description = "Utilities library"
 authors = [
     { name = "Csaba Cselko", email = "lendoo73dev@gmail.com" }
@@ -13,7 +13,9 @@ classifiers = [
     "Programming Language :: Python :: 3"
 ]
 
-dependencies = []
+dependencies = [
+    "paramiko>=4.0"
+]
 
 [project.scripts]
 cscs-sendmail = "cscs_tools.mail.cli:main"

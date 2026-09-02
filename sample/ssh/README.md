@@ -2,7 +2,7 @@
 
 A lightweight wrapper around **Paramiko** providing:
 
-- automatic parsing of `ssh-config` (including `Include`)
+- automatic parsing of SSH config files (including `Include`)
 - support for `ProxyJump` (jump hosts)
 - identity file loading (`IdentityFile`)
 - simple `connect → execute → close` workflow
@@ -19,7 +19,7 @@ Ideal for automation, CI/CD workflows, and remote command execution.
 from cscs_tools.ssh.services.ssh_service import SshService
 
 ssh = SshService(
-    config_dir="~/.ssh",
+    config_path="~/.ssh/config",
     key_path="~/.ssh/id_rsa",
 )
 
@@ -34,13 +34,13 @@ ssh.close()
 
 `SshService` reads:
 
-- `ssh-config` from the selected directory
+- a single SSH config file (e.g. `~/.ssh/config`)
 - files included via `Include`
 - host aliases
 - `ProxyJump` configuration
 - `IdentityFile` entries (unless overridden manually)
 
-### Example `ssh-config`
+### Example SSH config
 
 ```
 Host my-host
@@ -57,7 +57,7 @@ Host internal
 ### Usage
 
 ```python
-ssh = SshService("~/.ssh")
+ssh = SshService("~/.ssh/config")
 ssh.connect_to_host("internal")   # automatically jumps via my-host
 print(ssh.execute("uname -a"))
 ssh.close()
@@ -72,7 +72,7 @@ If you need to connect to multiple hosts, **close between connections**:
 ```python
 from cscs_tools.ssh.services.ssh_service import SshService
 
-ssh = SshService(config_dir="~/.ssh")
+ssh = SshService(config_path="~/.ssh/config")
 
 # --- Host 1 ---
 ssh.connect_to_host("my-host")
@@ -90,9 +90,9 @@ ssh.close()
 `connect_to_host()` opens a new SSH connection but does **not** close the previous one.  
 To avoid leaving unused TCP sessions open, you should always:
 
-- connect
-- execute
-- close
+- connect  
+- execute  
+- close  
 
 ---
 
@@ -100,12 +100,12 @@ To avoid leaving unused TCP sessions open, you should always:
 
 ### Optional arguments (with defaults)
 
-| Parameter     | Type | Default | Description |
-|---------------|------|---------|-------------|
-| `config_dir`  | str  | `.ssh`  | Directory containing `ssh-config`. Supports `~`. |
-| `key_path`    | str  | `.ssh/id_rsa` | Private key path. Overrides any `IdentityFile`. |
-| `password`    | str  | None    | Forces password authentication. |
-| `timeout`     | int  | 10–15   | Timeout for connect & command execution. |
+| Parameter      | Type | Default | Description |
+|----------------|------|---------|-------------|
+| `config_path`  | str  | `~/.ssh/config` | Path to the SSH config file. Supports `~`. |
+| `key_path`     | str  | `~/.ssh/id_rsa` | Private key path. Overrides any `IdentityFile`. |
+| `password`     | str  | None    | Forces password authentication. |
+| `timeout`      | int  | 10–15   | Timeout for connect & command execution. |
 
 ---
 
@@ -120,7 +120,7 @@ ssh.connect_to_host("server1")
 ### With password auth
 
 ```python
-ssh = SshService("~/.ssh", password="mypassword")
+ssh = SshService(config_path="~/.ssh/config", password="mypassword")
 ssh.connect_to_host("server1")
 ```
 
@@ -158,7 +158,7 @@ from cscs_tools.ssh.services.ssh_service import SshService
 
 servers = ["uke2", "sm-producer"]
 
-ssh = SshService("~/.ssh")
+ssh = SshService("~/.ssh/config")
 
 for host in servers:
     print(f"\n--- Connecting to {host} ---")
@@ -182,7 +182,7 @@ sample/ssh/ssh_sample.py
 ## 📝 Notes
 
 - Relative paths are resolved against the **current working directory**, not script location.
-- For consistent behavior, prefer absolute paths or `"~/.ssh"`.
+- For consistent behavior, prefer absolute paths or `"~/.ssh/config"`.
 - Jump-host and target connections are both closed via `ssh.close()`.
 
 ---

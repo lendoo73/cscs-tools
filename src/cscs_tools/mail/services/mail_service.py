@@ -1,5 +1,6 @@
 import mimetypes
 import smtplib
+import socket
 import ssl
 from collections.abc import Iterable
 from email import encoders
@@ -12,6 +13,7 @@ from email.mime.text import MIMEText
 from pathlib import Path
 
 from cscs_tools.mail.enums.security_mode import SecurityMode
+from cscs_tools.mail.exceptions.exceptions import MailAuthenticationException, MailConnectionException
 
 
 class MailService:
@@ -256,44 +258,61 @@ class MailService:
         Returns
         -------
         smtplib.SMTP
-            Configured SMTP-like client (SMTP or SMTP_SSL).
+            Configured SMTP client instance (SMTP or SMTP_SSL).
 
         Raises
         ------
-        smtplib.SMTPException
-            For connection, TLS negotiation, or authentication errors.
+        MailAuthenticationException
+            Raised when SMTP authentication fails, such as when invalid
+            credentials are provided or the SMTP server rejects the login.
+
+        MailConnectionException
+            Raised when a connection to the SMTP server cannot be established
+            or maintained. This includes network timeouts, socket errors,
+            connection failures, SMTP connection errors, and unexpected
+            server disconnects.
         """
+        try:
+            if self.security == SecurityMode.SSL:
+                context = ssl.create_default_context()
+                server = smtplib.SMTP_SSL(
+                    self.smtp_server,
+                    self.smtp_port,
+                    timeout=self.timeout,
+                    context=context,
+                )
+            else:
+                server = smtplib.SMTP(
+                    self.smtp_server,
+                    self.smtp_port,
+                    timeout=self.timeout
+                )
 
-        if self.security == SecurityMode.SSL:
-            context = ssl.create_default_context()
-            server = smtplib.SMTP_SSL(
-                self.smtp_server,
-                self.smtp_port,
-                timeout=self.timeout,
-                context=context,
-            )
-        else:
-            server = smtplib.SMTP(
-                self.smtp_server,
-                self.smtp_port,
-                timeout=self.timeout
-            )
+            if self.debug:
+                server.set_debuglevel(1)
 
-        if self.debug:
-            server.set_debuglevel(1)
-
-        server.ehlo()
-
-        if self.security == SecurityMode.STARTTLS:
-            context = ssl.create_default_context()
-            server.starttls(context=context)
             server.ehlo()
 
-        if self.smtp_username and self.smtp_password:
-            server.login(self.smtp_username, self.smtp_password)
+            if self.security == SecurityMode.STARTTLS:
+                context = ssl.create_default_context()
+                server.starttls(context=context)
+                server.ehlo()
 
-        return server
+            if self.smtp_username and self.smtp_password:
+                server.login(self.smtp_username, self.smtp_password)
 
+            return server
+        except smtplib.SMTPAuthenticationError as ex:
+            raise MailAuthenticationException(f"SMTP authentication failed: {ex}") from ex
+        except (
+            TimeoutError,
+            socket.timeout,
+            ConnectionError,
+            OSError,
+            smtplib.SMTPConnectError,
+            smtplib.SMTPServerDisconnected,
+        ) as ex:
+            raise MailConnectionException(f"SMTP connection failed: {ex}") from ex
 
 def normalize_recipients(to) -> list[str]:
     """
